@@ -1,0 +1,22 @@
+# 编辑器相关
+.idea
+
+# 包管理器
+node_modules
+.pnpm-debug.log*
+
+# 系统
+.DS_Store
+
+# 打包文件
+dist
+coverage
+packages/element-plus/version.ts
+
+# 本地环境
+*.local
+.eslintcache
+cypress/screenshots/*
+cypress/videos/*
+tmp
+docs/.vitepress/cache

@@ -1,0 +1,65 @@
+name: 测试并部署
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: 格式化并测试
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检查仓库
+        uses: actions/checkout@v3
+
+      - name: node
+        uses: actions/setup-node@v3
+
+      - name: 安装 pnpm
+        run: npm install -g pnpm
+
+      - name: 安装依赖
+        run: pnpm install --frozen-lockfile
+
+      - name: 格式化
+        run: pnpm format
+
+      - name: 测试
+        run: pnpm test
+
+  build:
+    name: 打包文档
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: 检查
+        uses: actions/checkout@v3
+      - name: node
+        uses: actions/setup-node@v3
+      - name: 安装 pnpm
+        run: npm install -g pnpm
+      - name: 安装依赖
+        run: pnpm install --frozen-lockfile
+      - name: 打包
+        run: pnpm docs:build
+      - name: 上传到缓存
+        uses: actions/upload-artifact@v3
+        with:
+          name: docs
+          path: ./packages/docs/.vitepress/dist
+  
+  deploy:
+    name: 部署到 Github Pages
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: 下载打包文件
+        uses: actions/download-artifact@v3
+        with:
+          name: docs
+      - name: 部署到 Github Pages
+        uses: pernix/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: .
