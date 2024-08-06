@@ -7,6 +7,7 @@
     "dev": "pnpm --filter @toy-element/play dev",
     "docs:dev": "pnpm --filter @toy-element/docs dev",
     "docs:build": "pnpm --filter @toy-element/docs build",
+    "format": "echo '待完成‘",
     "test": "echo '待完成‘"
   },
   "keywords": [],
