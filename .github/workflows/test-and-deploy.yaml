@@ -22,11 +22,8 @@ jobs:
       - name: 安装依赖
         run: pnpm install --frozen-lockfile
 
-      - name: 格式化
-        run: pnpm format
-
       - name: 测试
-        run: pnpm test
+        run: npm run test
 
   build:
     name: 打包文档
