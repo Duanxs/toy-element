@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 检查仓库
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
 
       - name: 安装 pnpm
         run: npm install -g pnpm
@@ -31,9 +31,9 @@ jobs:
     needs: test
     steps:
       - name: 检查
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
       - name: 安装 pnpm
         run: npm install -g pnpm
       - name: 安装依赖
@@ -41,7 +41,7 @@ jobs:
       - name: 打包
         run: pnpm docs:build
       - name: 上传到缓存
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: docs
           path: ./packages/docs/.vitepress/dist
@@ -52,11 +52,11 @@ jobs:
     needs: build
     steps:
       - name: 下载打包文件
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: docs
       - name: 部署到 Github Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: .
